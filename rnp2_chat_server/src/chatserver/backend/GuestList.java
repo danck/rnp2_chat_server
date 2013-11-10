@@ -41,6 +41,7 @@ public class GuestList {
 	 * 					Must not contain white space or special characters	
 	 */
 	public String addGuest(String hostname, String nickname){
+		hostname = hostname.replace("/", "");
 		lock.lock();
 		String rv = guestlist.put(hostname, nickname);
 		// Update the cached guest list
