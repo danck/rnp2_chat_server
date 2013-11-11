@@ -19,7 +19,8 @@ public class ChatServer {
 	// The number of worker threads equals the maximum number of concurrent connections.
 	// If the maximum is reached new connections will be stalled until new resources are
 	// freed (i.e. running connections are being closed)
-	public final static int NUMBER_IO_THREADS	= 80;
+	public final static int NUMBER_IO_THREADS	= 40;
+	public static final int NAME_MAX_LENGTH = 20;
 	
 	// Port on which the server listens for clients
 	public final static int PORT 			= 50000;

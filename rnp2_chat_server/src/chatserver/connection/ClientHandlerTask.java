@@ -1,14 +1,9 @@
 package chatserver.connection;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
-
-import javax.sound.sampled.Line;
-
 import chatserver.ChatServer;
 
 /**
@@ -63,8 +58,17 @@ public class ClientHandlerTask implements Callable {
 				// NEW
 				else if (bareCommand.equals(ClientCommand.NEW.toString())) {
 					if (scan.hasNext()) {
-						ctx.login(scan.next());
-						replyWith(ServerCommand.OK.toString());
+						String name = scan.next();
+						if (name.length() <= ChatServer.NAME_MAX_LENGTH) {
+							if (checkSyntax(name)) {
+								ctx.login(name);
+								replyWith(ServerCommand.OK.toString());
+							} else
+							{
+								error("Whitespace and special characters are prohibited");
+							}
+						} else
+							error("Name too long - maximum allowed: " + ChatServer.NAME_MAX_LENGTH);
 					}
 					else
 						error("No username given");
@@ -89,6 +93,14 @@ public class ClientHandlerTask implements Callable {
 		return ctx.login(nickname);
 	}
 	
+	private boolean checkSyntax(String name) {
+		for (char c : name.toCharArray())
+		{
+			if (! Character.isLetterOrDigit(c))
+				return false;
+		}
+		return true;
+	}
 	/**
 	 * Remove the current client from the guest list and state success.
 	 */

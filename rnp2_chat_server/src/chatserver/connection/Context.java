@@ -73,6 +73,7 @@ public class Context {
 	 */
 	boolean login(String nickname) {
 		String hostIP 	= socket.getInetAddress().toString();
+		hostIP.substring(1);
 		gl.addGuest(hostIP, nickname);
 		if (gl.addGuest(hostIP, nickname) == null)
 			ChatServer.infoLogger.log(Level.INFO, "Added " + hostIP + " as " + nickname);
@@ -83,6 +84,7 @@ public class Context {
 	
 	void logout() {
 		String hostIP 	= socket.getInetAddress().toString();
+		hostIP.substring(1);
 		gl.removeGuest(hostIP);
 		ChatServer.infoLogger.log(Level.FINE, "Removed " + hostIP);
 	}
